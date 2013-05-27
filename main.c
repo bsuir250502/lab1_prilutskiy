@@ -30,7 +30,7 @@ int GetInt(int * number)
 	char buffer[20];
 	fgets(buffer,20,stdin);
 	*number = atoi(buffer);
-	return strlen(buffer)>2?0:1;
+	return (strlen(buffer) || (*number) > 5 || (*number) < 0)>2?0:1;
 }
 
 
@@ -44,7 +44,7 @@ int IsPremium(Exam * source, int count)
 	return tmp>4.5?1:0;
 }
 
-void AddStudent(Student * source,int count)
+void AddStudent(Student * source, int count)
 {
 	char * buffer = (char *) malloc(20*sizeof(char));
 	puts("Name");
@@ -75,8 +75,6 @@ void AddStudent(Student * source,int count)
 		GetInt(&source[count].AllExams[i].Grade);
 	}
 	free(buffer);
-	if (!realloc(source, count + 1))
-		puts("Memory allocation error");
 } 
 
 void Print(Student * source, int count, int flag)
@@ -120,7 +118,14 @@ int main(int argc, char * argv[])
 				return 0;
 			}
 	puts("Привет! Hi!");
-	Student * AllStudents = (Student*)malloc(sizeof(Student));
+	puts("Type max amount of students");
+	int n;
+	if (!GetInt(&n))
+	{
+		puts("Error");
+		return EXIT_SUCCESS;
+	}
+	Student * AllStudents = (Student*)malloc(n * sizeof(Student));
 	int StudentCount = 0;   
 	int inp = -1;
 	while (1)
