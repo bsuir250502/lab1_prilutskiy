@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdio_ext.h>
-#include <stdlib.h>
-#include <string.h>
-   
+
 typedef struct exam
-{ 
+{
 	char Title[20];
 	int Grade;
 } Exam;
@@ -17,7 +15,7 @@ typedef struct student
 	char Speciality[20];
 	char Group[20];
 	int ExamCount;
-	Exam AllExams[5];
+	Exam AllExams[5]
 } Student;
 
 void GetString(char * string)
@@ -46,20 +44,16 @@ int IsPremium(Exam * source, int count)
 
 void AddStudent(Student * source,int count)
 {
-	char * buffer = (char *) malloc(20*sizeof(char));
-	puts("Name");
-	GetString(buffer);
-	strcpy(source[count].Name,buffer);
-	puts("Faculty");
-	GetString(buffer);
-	strcpy(source[count].Faculty, buffer);
-	puts("Speciality");
-	GetString(buffer);
-	strcpy(source[count].Speciality, buffer);
-	puts("Group");
-	GetString(buffer);
-	strcpy(source[count].Group, buffer);
 
+	puts("Name");
+	GetString(&source[count].Name);
+	puts("Faculty");
+	GetString(&source[count].Faculty);
+	puts("Speciality");
+	GetString(&source[count].Speciality);
+	puts("Group");
+	GetString(&source[count].Group);
+	
 	//exams
 	puts("Number of Exams");
 	while (1)		
@@ -69,14 +63,11 @@ void AddStudent(Student * source,int count)
 	for (int i = 0; i<source[count].ExamCount; i++)
 	{
 		puts("Exam title");
-		GetString(buffer);
-		strcpy(source[count].AllExams[i].Title, buffer);
+		GetString(&source[count].AllExams[i].Title);
 		puts("Exam grade");
 		GetInt(&source[count].AllExams[i].Grade);
 	}
-	free(buffer);
-	if (!realloc(source, count + 1))
-		puts("Memory allocation error");
+	realloc(source, count + 1);	
 } 
 
 void Print(Student * source, int count, int flag)
@@ -93,7 +84,7 @@ void Print(Student * source, int count, int flag)
 			{
 				if (IsPremium(source[i].AllExams,source[i].ExamCount)==0) break;
 			}
-		printf("Name: %s\n", source[i].Name);
+		printf("Name: \n", source[i].Name);
 		printf("Faculty: %s\n",source[i].Faculty);
 		printf("Speciality: %s\n", source[i].Speciality);
 		printf("Group: %s\n", source[i].Group);
@@ -121,7 +112,7 @@ int main(int argc, char * argv[])
 			}
 	puts("Привет! Hi!");
 	Student * AllStudents = (Student*)malloc(sizeof(Student));
-	int StudentCount = 0;   
+	int StudentCount = 0;
 	int inp = -1;
 	while (1)
 	{
@@ -131,7 +122,7 @@ int main(int argc, char * argv[])
 		{
 			case 0:
 			free(AllStudents);
-				return 0; 
+				return 0;
 			case 1:
 			{
 				AddStudent(AllStudents, StudentCount);
